@@ -8,7 +8,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/test
+      - MONGO_URI=mongodb://root:example@mongodb:27017/test
     networks:
       - backend
     depends_on:
@@ -23,6 +23,7 @@ services:
       - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_URI=mongodb://root:example@mongodb:27017/test
     volumes:
       - ./data:/data/db
     networks:
