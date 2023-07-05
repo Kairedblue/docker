@@ -6,7 +6,7 @@ services:
     container_name: web
     restart: always
     environment:
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/test
+      - MONGODB_URI=mongodb://root:password@mongodb:27017/test
     ports:
       - 5000:5000
     networks:
@@ -17,13 +17,11 @@ services:
     image: mongo:latest
     container_name: mongodb
     restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
     ports:
       - 27017:27017
-    environment:
-      - MONGO_INITDB_DATABASE=test
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
-      - MONGODB_URI=mongodb://root:example@mongodb:27017/test
     volumes:
       - ./data:/data/db
     networks:
