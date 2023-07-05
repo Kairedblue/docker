@@ -2,8 +2,6 @@ FROM node:alpine
 
 EXPOSE 5000
 
-ENV MONGODB_URI=mongodb://root:password123@mongodb-primary
-
 WORKDIR /usr/app
 
 RUN npm i npm@latest -g
