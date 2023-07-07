@@ -1,5 +1,5 @@
 const redis = require("redis");
-const http = require("http");
+const util = require("util");
 
 const client = redis.createClient({
   socket: {
@@ -20,5 +20,8 @@ client.on("connect", () => {
   console.log("Redis client connected");
 });
 client.connect();
+
+client.get = util.promisify(client.get).bind(client);
+client.set = util.promisify(client.set).bind(client);
 
 module.exports = client;
