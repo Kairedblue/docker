@@ -15,18 +15,7 @@ router.get("/", (req, res) => {
       console.log(err);
       return res.status(500).send("Internal Server Error");
     }
-
-    client.get("randomData", (err, randomDataResult) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send("Internal Server Error");
-      }
-
-      res.send({
-        name: nameResult,
-        randomData: randomDataResult,
-      });
-    });
+    res.send(nameResult);
   });
 });
 
