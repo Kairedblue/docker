@@ -12,5 +12,4 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
-CMD [ "node", "./src/configs/redis.config.js" ]
-# CMD ["npm", "start"]
+CMD ["npm", "start"]

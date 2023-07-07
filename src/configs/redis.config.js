@@ -21,15 +21,4 @@ client.on("connect", () => {
 });
 client.connect();
 
-client.set("name", "John Doe");
-
-client.get("name", (err, result) => {
-  http
-    .createServer((req, res) => {
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("Name: " + result);
-    })
-    .listen(3000);
-});
-
 module.exports = client;
