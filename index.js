@@ -11,7 +11,19 @@ require("dotenv").config();
 const connectDB = require("./src/configs/mongodb.config");
 const redisClient = require("./src/configs/redis.config");
 connectDB();
-redisClient.connect();
+
+redisClient.set("foo", "bar", (err, reply) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log(reply);
+});
+redisClient.get("foo", (err, reply) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log(reply);
+});
 
 const app = express();
 const server = http.createServer(app);

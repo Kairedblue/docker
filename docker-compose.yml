@@ -1,103 +1,32 @@
-# version: "3"
-# services:
-#   mongodb:
-#     container_name: db_container
-#     image: mongo:latest
-#     restart: always
-#     ports:
-#       - 27017:27017
-#     volumes:
-#       - ./data:/data/db
-#   web:
-#     build: .
-#     ports:
-#       - 5000:5000
-#     environment:
-#       - PORT=5000
-#       - MONGODB_URI=mongodb://mongodb:27017
-#     depends_on:
-#       - mongodb
-# volumes:
-#   mongodb: {}
-version: "2"
-
+version: "3"
 services:
+  mongodb:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+  redis:
+    container_name: redis_container
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data:/data/redis
   web:
     build: .
     ports:
       - 5000:5000
     environment:
       - PORT=5000
-      - MONGODB_URI=mongodb://root:password123@mongodb-primary:27017
-      - REDIS_URI=redis://my_password@redis-primary:6379
+      - MONGODB_URI=mongodb://mongodb:27017
+      - REDIS_URI=redis://redis:6379
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
-      - redis-primary
-      - redis-secondary
-
-  mongodb-primary:
-    image: docker.io/bitnami/mongodb:6.0
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    volumes:
-      - "mongodb_master_data:/bitnami/mongodb"
-    ports:
-      - "27017:27017"
-
-  mongodb-secondary:
-    image: docker.io/bitnami/mongodb:6.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-
-  mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:6.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-
-  redis-primary:
-    image: docker.io/bitnami/redis:7.0
-    ports:
-      - "6379"
-    environment:
-      - REDIS_REPLICATION_MODE=master
-      - REDIS_PASSWORD=my_password
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    volumes:
-      - "redis_data:/bitnami/redis/data"
-
-  redis-secondary:
-    image: docker.io/bitnami/redis:7.0
-    ports:
-      - "6379"
-    depends_on:
-      - redis-primary
-    environment:
-      - REDIS_REPLICATION_MODE=slave
-      - REDIS_MASTER_HOST=redis-primary
-      - REDIS_MASTER_PORT_NUMBER=6379
-      - REDIS_MASTER_PASSWORD=my_password
-      - REDIS_PASSWORD=my_password
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-
+      - mongodb
+      - redis
 volumes:
-  mongodb_master_data:
-    driver: local
-  redis_data:
-    driver: local
+  mongodb: {}
+  redis: {}
