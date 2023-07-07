@@ -34,7 +34,6 @@ const PORT = process.env.PORT || 5000;
 // });
 
 const redis = require("redis");
-const http = require("http");
 
 const client = redis.createClient({
   socket: {
