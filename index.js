@@ -9,19 +9,7 @@ const createError = require("http-errors");
 require("dotenv").config();
 
 const connectDB = require("./src/configs/mongodb.config");
-const redisClient = require("./src/configs/redis.config");
 connectDB();
-
-try {
-  redisClient.set("foo", "bar");
-  redisClient.get("foo", (err, reply) => {
-    if (err) console.log(err);
-    console.log(reply);
-  });
-} catch (error) {
-  console.log(error);
-  process.exit(1);
-}
 
 const app = express();
 const server = http.createServer(app);
@@ -33,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(helmet());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/api", require("./src/routes/auth.routes"));
 app.use((req, res, next) => {
   next(createError.NotFound("This route does not exist"));
 });

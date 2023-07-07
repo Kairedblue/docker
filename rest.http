@@ -1,0 +1,6 @@
+POST http://ip172-18-0-43-cijqpbssnmng008i89u0-5000.direct.labs.play-with-docker.com/api
+Content-Type: application/json
+
+{
+    "data": "Hello World!"
+}
