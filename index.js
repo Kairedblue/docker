@@ -12,6 +12,17 @@ const connectDB = require("./src/configs/mongodb.config");
 const redisClient = require("./src/configs/redis.config");
 connectDB();
 
+try {
+  redisClient.set("foo", "bar");
+  redisClient.get("foo", (err, reply) => {
+    if (err) console.log(err);
+    console.log(reply);
+  });
+} catch (error) {
+  console.log(error);
+  process.exit(1);
+}
+
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
@@ -22,28 +33,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(helmet());
 app.use(express.static(path.join(__dirname, "public")));
-app
-  .route("/api")
-  .get((req, res) => {
-    redisClient.get("data", (err, data) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
-      res.send(data);
-    });
-  })
-  .post((req, res) => {
-    const data = req.body.data;
-    redisClient.set("data", data, (err) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
-      console.log(data);
-      res.send("Data saved to Redis");
-    });
-  });
 app.use((req, res, next) => {
   next(createError.NotFound("This route does not exist"));
 });
