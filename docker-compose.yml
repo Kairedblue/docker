@@ -8,14 +8,30 @@ services:
       - 27017:27017
     volumes:
       - ./data:/data/db
-  redis:
-    container_name: redis_container
-    image: redis:latest
-    restart: always
+  redis-primary:
+    image: docker.io/bitnami/redis:7.0
     ports:
-      - 6379:6379
+      - "6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=my_password
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     volumes:
-      - ./data:/data/redis
+      - "redis_data:/bitnami/redis/data"
+
+  redis-secondary:
+    image: docker.io/bitnami/redis:7.0
+    ports:
+      - "6379"
+    depends_on:
+      - redis-primary
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-primary
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=my_password
+      - REDIS_PASSWORD=my_password
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
   web:
     build: .
     ports:
@@ -26,7 +42,8 @@ services:
       - REDIS_URI=redis://redis:6379
     depends_on:
       - mongodb
-      - redis
+      - redis-primary
+      - redis-secondary
 volumes:
   mongodb: {}
-  redis: {}
+  redis_data: { driver: local }
