@@ -10,13 +10,8 @@ router.post("/", (req, res) => {
 
 router.get("/", (req, res) => {
   // get strings from Redis
-  client.get("name", (err, nameResult) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Internal Server Error");
-    }
-    res.send(nameResult);
-  });
+  const data = client.get("name");
+  res.send(data);
 });
 
 module.exports = router;
