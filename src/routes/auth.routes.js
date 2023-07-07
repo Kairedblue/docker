@@ -3,8 +3,8 @@ const client = require("../configs/redis.config");
 
 router.post("/", (req, res) => {
   // set a string to Redis
-  client.set("name", "John Doe");
-  client.setex("randomData", 3600, "This is a random data");
+  const { name } = req.body;
+  client.set("name", name);
   res.send("Random data has been set to Redis");
 });
 
