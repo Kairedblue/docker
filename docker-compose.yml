@@ -26,8 +26,7 @@ services:
       - REDIS_URI=redis://my_password@redis-primary:6379
     depends_on:
       - mongodb
-      - redis-primary
-      - redis-secondary
+      - redis
 volumes:
   mongodb: {}
   redis: {}
