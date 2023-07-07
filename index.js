@@ -1,5 +1,5 @@
-// const express = require("express");
-// const http = require("http");
+const express = require("express");
+const http = require("http");
 // const morgan = require("morgan");
 // const cors = require("cors");
 // const helmet = require("helmet");
@@ -11,9 +11,9 @@
 // const connectDB = require("./src/configs/mongodb.config");
 // connectDB();
 
-// const app = express();
-// const server = http.createServer(app);
-// const PORT = process.env.PORT || 5000;
+const app = express();
+const server = http.createServer(app);
+const PORT = process.env.PORT || 5000;
 
 // app.use(morgan("dev"));
 // app.use(express.json());
@@ -33,9 +33,6 @@
 //   });
 // });
 
-// server.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
 const redis = require("redis");
 const http = require("http");
 
@@ -61,18 +58,18 @@ client.connect();
 
 client.set("name", "John Doe");
 
-client.get("name", (err, nameResult) => {
-  if (err) {
-    console.log(err);
-    return res.status(500).send("Internal Server Error");
-  }
-  http
-    .createServer((req, res) => {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.write(`<h1>Hello ${nameResult}</h1>`);
-      res.end();
-    })
-    .listen(process.env.PORT, () => {
-      console.log("Server is running on port 3000");
+app.get("/", (req, res) => {
+  client.get("name", (err, nameResult) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Internal Server Error");
+    }
+    return res.send({
+      name: nameResult,
     });
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
