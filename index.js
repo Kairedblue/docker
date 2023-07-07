@@ -72,7 +72,7 @@ client.get("name", (err, nameResult) => {
       res.write(`<h1>Hello ${nameResult}</h1>`);
       res.end();
     })
-    .listen(3000, () => {
+    .listen(process.env.PORT, () => {
       console.log("Server is running on port 3000");
     });
 });
