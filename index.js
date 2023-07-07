@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app
   .route("/api")
   .get((req, res) => {
-    const data = redisClient.get("data", (err, data) => {
+    redisClient.get("data", (err, data) => {
       if (err) {
         console.log(err);
         throw err;
@@ -35,7 +35,7 @@ app
   })
   .post((req, res) => {
     const data = req.body.data;
-    redisClient.set("data", data, (err, data) => {
+    redisClient.set("data", data, (err) => {
       if (err) {
         console.log(err);
         throw err;
