@@ -8,8 +8,8 @@ const createError = require("http-errors");
 
 require("dotenv").config();
 
-const connectDB = require("./src/configs/mongodb.config");
-connectDB();
+// const connectDB = require("./src/configs/mongodb.config");
+// connectDB();
 
 const app = express();
 const server = http.createServer(app);

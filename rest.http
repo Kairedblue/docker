@@ -1,6 +1,6 @@
-POST http://ip172-19-0-11-cijsctcsnmng008i8glg-5000.direct.labs.play-with-docker.com/api
+POST http://localhost:5000/api
 Content-Type: application/json
 
 {
-    "name": "Hello World!"
+    "name": "Hello John!"
 }
