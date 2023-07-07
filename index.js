@@ -9,7 +9,9 @@ const createError = require("http-errors");
 require("dotenv").config();
 
 const connectDB = require("./src/configs/mongodb.config");
+const redisClient = require("./src/configs/redis.config");
 connectDB();
+redisClient.connect();
 
 const app = express();
 const server = http.createServer(app);

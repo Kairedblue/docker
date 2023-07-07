@@ -29,10 +29,13 @@ services:
     environment:
       - PORT=5000
       - MONGODB_URI=mongodb://root:password123@mongodb-primary:27017
+      - REDIS_URI=redis://my_password@redis-primary:6379
     depends_on:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
+      - redis-primary
+      - redis-secondary
   mongodb-primary:
     image: docker.io/bitnami/mongodb:6.0
     environment:
@@ -66,6 +69,30 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  redis-primary:
+    image: docker.io/bitnami/redis:7.0
+    ports:
+      - "6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=my_password
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    volumes:
+      - "redis_data:/bitnami/redis/data"
+
+  redis-secondary:
+    image: docker.io/bitnami/redis:7.0
+    ports:
+      - "6379"
+    depends_on:
+      - redis-primary
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-primary
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=my_password
+      - REDIS_PASSWORD=my_password
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
 
 volumes:
   mongodb_master_data:
