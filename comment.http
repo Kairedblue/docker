@@ -1,0 +1,12 @@
+###
+GET http://localhost:5000/api/comment?postId=64ab759bc44281702896c678&offset=10
+###
+POST http://localhost:5000/api/comment/create-comment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWE5YTdjOWFmMzUzMzJjYTgwYjI4OSIsImlhdCI6MTY4ODk2MDMwMiwiZXhwIjoxNjg4OTYxMjAyfQ.56ZH4d1asrWBo56Y-tsKpS6KnvrUdc7ELrLQP2Y9Jv0
+
+{
+    "postId": "64ab759bc44281702896c678",
+    "content": "comment 2",
+    "isDel": false
+}

@@ -2,5 +2,7 @@ POST http://localhost:5000/api
 Content-Type: application/json
 
 {
-    "name": "Hello John!"
+    "name": "Hello Neohdufoshduif!"
 }
+###
+GET http://localhost:5000/api

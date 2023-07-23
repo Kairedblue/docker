@@ -1,0 +1,34 @@
+POST http://localhost:5000/api/post/create-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWE5YTdjOWFmMzUzMzJjYTgwYjI4OSIsImlhdCI6MTY4OTMyMTQxMiwiZXhwIjoxNjg5MzIyMzEyfQ.QufY7-_UXvmPHd2GDs7RzyX7TJSyozgxWr6YhPPkNWo   
+
+{
+    "title": "Post 1",
+    "content": "Content 2",
+    "picture": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "pictureKey": "123456789",
+    "tags": ["tag1", "tag2"],
+    "isDel": false
+}
+###
+GET http://localhost:5000/api/post/
+###
+GET http://localhost:5000/api/post/64b10201e286fcd6c7578eb0
+###
+PUT http://localhost:5000/api/post/update-post/64ab759bc44281702896c678
+Content-Type: application/json
+
+{
+    "title": "Post 1",
+    "content": "Content 1",
+    "author": "64a95628bb31ea9cdba8c5b2",
+    "picture": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "pictureKey": "123456789",
+    "tags": ["tag3", "tag2"]
+}
+###
+PUT http://localhost:5000/api/post/like-post/64ab759bc44281702896c678
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWE5YTdjOWFmMzUzMzJjYTgwYjI4OSIsImlhdCI6MTY4ODk1ODMzNywiZXhwIjoxNjg4OTU5MjM3fQ.-2M0Bdu_9uyP2QJU30py_nDE_HByFySTSkXvwoClyew
+###
+PUT http://localhost:5000/api/post/dislike-post/64ab759bc44281702896c678
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWE5YTdjOWFmMzUzMzJjYTgwYjI4OSIsImlhdCI6MTY4ODk1ODMzNywiZXhwIjoxNjg4OTU5MjM3fQ.-2M0Bdu_9uyP2QJU30py_nDE_HByFySTSkXvwoClyew

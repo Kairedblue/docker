@@ -1,0 +1,52 @@
+POST http://localhost:5000/api/auth/send-otp
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com"
+}
+
+###
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "username": "Testdemo",
+    "password": "testdemo",
+    "otp": "815702"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "emailOrUsername": "test@gmail.com",
+    "password": "testdemo"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "emailOrUsername": "test1@gmail.com",
+    "password": "testdemo"
+}
+###
+POST http://localhost:5000/api/auth/verify-access-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjUzNGIzMGI5YmMxNTdmZjczNjljYyIsImlhdCI6MTY4OTU5NzEzNywiZXhwIjoxNjg5NTk3MTk3fQ.gldmcT3VxO593Z1uePgAwOuwVTfV7t0PZLM59HY2UQ8
+###
+GET http://localhost:5000/api/user
+###
+POST http://localhost:5000/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjUzNGIzMGI5YmMxNTdmZjczNjljYyIsImlhdCI6MTY4OTU5NzEzNywiZXhwIjoxNjg5NjAwNzM3fQ.3dDL3-ueWTeqi6SjyI9veui-_tDw5OJI0hEG9KVVZDw"
+}
+###
+DELETE http://localhost:5000/api/auth/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjUzNGIzMGI5YmMxNTdmZjczNjljYyIsImlhdCI6MTY4OTU5NzIzMiwiZXhwIjoxNjg5NjAwODMyfQ.0DyVP2W0WgGFP1oe93eb-AlNpAhWQ0usk_GZQ3VNcmY"
+}
